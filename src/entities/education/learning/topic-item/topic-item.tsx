@@ -38,7 +38,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
   onStartLesson,
 }) => {
   const { colors } = useThemeContext();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const indicatorRoundColors = {
     borderColor: isPassed ? colors.BgSuccess : colors.BgAccentSecondary,
@@ -103,7 +103,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
               <PrimaryButton
                 isHapticFeedback
-                width={108}
+                width={i18n.language === 'de' ? 128 : 108}
                 text={isPassed ? t("common.retry") : t("common.start")}
                 onClick={onStartLesson}
               />

@@ -1,6 +1,6 @@
 {
   "name": "kana_master",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "main": "src/app/AppEntry.ts",
   "scripts": {
     "start": "expo start",

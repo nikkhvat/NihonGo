@@ -39,7 +39,6 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
       if (isHiraganaAvailable) initial.push(CardMode.romajiToHiragana);
       if (isKatakanaAvailable) initial.push(CardMode.katakanaToRomaji);
       if (isKatakanaAvailable) initial.push(CardMode.romajiToKatakana);
-
     }
 
     if (questionMode === QuestionMode.Brash) {
@@ -48,8 +47,8 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
     }
     
     if (questionMode === QuestionMode.Type) {
-      if (isHiraganaAvailable) initial.push(CardMode.katakanaToRomaji);
-      if (isKatakanaAvailable) initial.push(CardMode.hiraganaToRomaji);
+      if (isHiraganaAvailable) initial.push(CardMode.hiraganaToRomaji);
+      if (isKatakanaAvailable) initial.push(CardMode.katakanaToRomaji);
     }
 
     setSelectedCardMode(initial);

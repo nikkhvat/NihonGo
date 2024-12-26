@@ -100,7 +100,7 @@ const Cell: React.FC<CellProps> = ({
         {
           width: isLong ? widthLong : widthDefault,
           height: widthDefault,
-          backgroundColor: active ? colors.BgAccentSecondary : pressed ? colors.BgPrimaryPressed : "transparent",
+          backgroundColor: active ? pressed ? colors.BgAccentSecondaryPressed : colors.BgAccentSecondary : pressed ? colors.BgPrimaryPressed : "transparent",
           borderColor:
             (!cell || active) ? "transparent" : colors.BorderDefault,
         },

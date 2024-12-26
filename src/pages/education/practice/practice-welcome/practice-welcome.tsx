@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, ScrollView, View } from "react-native";
+import { Dimensions, ScrollView, Text } from "react-native";
 
 import { RootState } from "@/app/store";
 import EducationKanaSelectedCard, {
