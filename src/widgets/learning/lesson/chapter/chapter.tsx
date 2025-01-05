@@ -93,7 +93,7 @@ const Chapter: React.FC<ChapterProps> = ({
               isOpened={activeLesson === getKana(item.title, activeTab)}
               isLast={index + 1 === lessons.length}
               icon={getKana(item.title, activeTab)}
-              title={`${t("lessonsList.lesson")} ${index}`}
+              title={`${t("lessonsList.lesson")} ${index + (activeTab === KanaAlphabet.Katakana ? 11 : 0)}`}
               subtitle={item.letters
                 .map((item) => getKana(item, activeTab))
                 .join(", ")}

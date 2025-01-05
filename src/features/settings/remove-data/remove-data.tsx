@@ -44,6 +44,8 @@ const RemoveData: React.FC = () => {
     fr: ["o", "Ko", "Mo", "Go"],
     it: ["B", "KB", "MB", "GB"],
     pt: ["B", "KB", "MB", "GB"],
+    ch: ["字节", "千字节", "兆字节", "吉字节"],
+    ko: ["바이트", "킬로바이트", "메가바이트", "기가바이트"],
   }
 
   function formatBytes(bytes: number, decimals = 2): string {

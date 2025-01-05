@@ -1,13 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import CryptoJS from 'crypto-js';
+
 import { InitialState } from "./types";
-import { getChapters } from "./api";
+import { getChapters, getHashChapters } from "./api";
 
 const initialState: InitialState = {
   completedLesson: [],
   chapters: [],
+  hash: null,
   lang: "en",
   lastUpdate: 0,
+};
+
+const getObjectHash = (obj: Object) => {
+  const jsonString = JSON.stringify(obj);
+  return CryptoJS.SHA256(jsonString).toString(CryptoJS.enc.Hex);
 };
 
 export const updateLessons = createAsyncThunk("LESSONS/UPDATE_LESSONS",
@@ -26,11 +34,31 @@ export const updateLessons = createAsyncThunk("LESSONS/UPDATE_LESSONS",
       console.error(error)
     }
 
-    return {
-      ok: false,
-      chapters: [],
-      lang: lang
+    return { ok: false }
+  }
+);
+
+export const checkLessons = createAsyncThunk("LESSONS/CHECK_LESSONS",
+  async ({ lang, hash }: { lang: string, hash: string }) => {
+    try {
+      const { checkData, checkStatus } = await getHashChapters(lang);
+
+      if (checkStatus !== 200 || checkData.hash === hash) return { ok: false }
+
+      const { data, status } = await getChapters(lang);
+
+      if (status === 200) {
+        return {
+          ok: true,
+          chapters: data.chapters,
+          lang: lang
+        }
+      }
+    } catch (error) {
+      console.error(error)
     }
+
+    return { ok: false }
   }
 );
 
@@ -54,6 +82,15 @@ export const lessonsSlice = createSlice({
         state.chapters = action.payload?.chapters
         state.lastUpdate = +new Date()
         state.lang = action.payload.lang as "en"
+        state.hash = getObjectHash(action.payload?.chapters);
+      }
+    })
+    builder.addCase(checkLessons.fulfilled, (state, action) => {
+      if (action.payload?.ok) {
+        state.chapters = action.payload?.chapters
+        state.lastUpdate = +new Date()
+        state.lang = action.payload.lang as "en"
+        state.hash = getObjectHash(action.payload?.chapters);
       }
     })
   }

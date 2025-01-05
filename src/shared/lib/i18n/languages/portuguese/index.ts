@@ -6,6 +6,7 @@ const Portuguese = {
     retry: "Repetir",              // Por exemplo, repetir uma lição
     complete: "Concluir",          // Por exemplo, concluir a última tela de uma lição
     start: "Iniciar",              // Por exemplo, iniciar uma nova lição
+    welcome: "Bem-vindos"
   },
 
   tabs: {
@@ -105,6 +106,8 @@ const Portuguese = {
       githubRepository: "Repositório GitHub", // Subtítulo do botão que leva ao GitHub
     },
     version: "Versão",                          // Versão do aplicativo, por exemplo Versão 2.24.3
+
+    changeLanguageCaption: "Você pode alterar o idioma do aplicativo nas configurações."
   },
 
   result: {

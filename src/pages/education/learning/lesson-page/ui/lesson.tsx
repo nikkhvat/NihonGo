@@ -29,6 +29,7 @@ interface LessonProps {
 const Lesson: React.FC<LessonProps> = ({ lesson }) => {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
+
   const { init, currentScreen, screen, lessonScreens, next, retry } =
     useEducationLessonContext();
 

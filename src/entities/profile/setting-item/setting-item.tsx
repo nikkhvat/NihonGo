@@ -13,6 +13,7 @@ import {
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
+import { useHaptic } from "@/shared/helpers/haptic";
 
 interface SettingItemProps {
   text: string;
@@ -34,6 +35,7 @@ const SettingItem: React.FC<SettingItemProps> = ({
   link,
 }) => {
   const { colors } = useThemeContext();
+  const { triggerHaptic } = useHaptic()  
 
   return (
     <Pressable
@@ -49,6 +51,8 @@ const SettingItem: React.FC<SettingItemProps> = ({
         !subText ? { height: 44 } : { height: 64 },
       ]}
       onPress={() => {
+        triggerHaptic()
+        
         if (link) {
           Linking.openURL(link);
         }
@@ -90,6 +94,7 @@ const SettingItem: React.FC<SettingItemProps> = ({
           thumbColor={isEnable ? colors.BgPrimary : colors.BgPrimary}
           ios_backgroundColor={colors.BgLightGray}
           onValueChange={() => {
+            triggerHaptic()
             onValueChange?.();
           }}
           value={isEnable}

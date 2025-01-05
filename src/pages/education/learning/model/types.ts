@@ -6,6 +6,7 @@ export interface InitialState {
     title: string;
     lessons: (AutoLesson | ManuallyLesson)[]
   }[]
+  hash: string | null;
   lastUpdate: number
   lang: "ru" | "en",
 }

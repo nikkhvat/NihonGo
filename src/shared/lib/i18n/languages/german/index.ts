@@ -6,6 +6,7 @@ const German = {
     retry: "Wiederholen",           // Zum Beispiel eine Lektion erneut starten
     complete: "Abschließen",        // Zum Beispiel den letzten Bildschirm einer Lektion abschließen
     start: "Starten",               // Zum Beispiel eine neue Lektion starten
+    welcome: "Willkommen"
   },
 
   tabs: {
@@ -105,6 +106,8 @@ const German = {
       githubRepository: "GitHub-Repository",   // Untertitel der Schaltfläche, die zu GitHub führt
     },
     version: "Version",                          // App-Version, z. B. Version 2.24.3
+
+    changeLanguageCaption: "Sie können die Sprache der Anwendung in den Einstellungen ändern."
   },
 
   result: {

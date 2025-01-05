@@ -24,7 +24,7 @@ const KanaTableChoiceLettersPage: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProps>();
 
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useThemeContext();
   const insets = useSafeAreaInsets();
 
@@ -129,10 +129,10 @@ const KanaTableChoiceLettersPage: React.FC = () => {
             KanaAlphabet.Hiragana,
             KanaAlphabet.Katakana
           ]}
-          translate={[
-            "ひらがな",
-            "カタカナ"
-          ]}
+          translate={i18n.language === "ch" ?
+            [t("kana.hiragana"), t("kana.katakana")] :
+            ["ひらがな", "カタカナ"]
+          }
           customStyles={{
             flex: 2
           }}

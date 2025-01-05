@@ -10,6 +10,16 @@ export const getChapters = async (lang: string) => {
   }
 }
 
+export const getHashChapters = async (lang: string) => {
+  const data = await fetch(`${process.env.API_URL}/api/v2/check/${lang}`);
+  const json = await data.json()
+
+  return {
+    checkData: json,
+    checkStatus: data.status
+  }
+}
+
 export const ping = async () => {
   const data = await fetch(`${process.env.API_URL}/api/ping`);
 

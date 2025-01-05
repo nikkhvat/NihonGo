@@ -36,13 +36,15 @@ const SettingsLanguage: React.FC = () => {
   const onPress = () => {
     const options = [
       t('alert.cancel'),
+      LanguageName.ch,
       LanguageName.en,
       LanguageName.es,
-      LanguageName.fr,
-      LanguageName.ru,
       LanguageName.pt,
+      LanguageName.ru,
+      LanguageName.fr,
       LanguageName.de,
       LanguageName.it,
+      LanguageName.ko,
     ];
     const cancelButtonIndex = 0;
 
@@ -53,25 +55,31 @@ const SettingsLanguage: React.FC = () => {
     }, (buttonIndex?: number) => {
       switch (buttonIndex) {
         case 1:
-          setLanguage(ShortLanguage.EN);
+          setLanguage(ShortLanguage.CH);
           break;
         case 2:
-          setLanguage(ShortLanguage.ES);
+          setLanguage(ShortLanguage.EN);
           break;
         case 3:
-          setLanguage(ShortLanguage.FR);
+          setLanguage(ShortLanguage.ES);
           break;
         case 4:
-          setLanguage(ShortLanguage.RU);
-          break;
-        case 5:
           setLanguage(ShortLanguage.PT);
           break;
+        case 5:
+          setLanguage(ShortLanguage.RU);
+          break;
         case 6:
-          setLanguage(ShortLanguage.DE);
+          setLanguage(ShortLanguage.FR);
           break;
         case 7:
+          setLanguage(ShortLanguage.DE);
+          break;
+        case 8:
           setLanguage(ShortLanguage.IT);
+          break;
+        case 9:
+          setLanguage(ShortLanguage.KO);
           break;
         default:
           break;

@@ -180,7 +180,8 @@ const styles = StyleSheet.create({
   },
   btnsContainer: {
     width: "100%",
-    height: 50,
+    height: 66,
+    paddingTop: 16
   },
 
   blocks: {

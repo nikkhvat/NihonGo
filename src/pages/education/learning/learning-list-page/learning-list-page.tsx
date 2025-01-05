@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
-import { KanaAlphabet } from "@/shared/constants/kana";
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-import Switcher from "@/shared/ui/switcher/switcher";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
-import { updateLessons } from "../model/slice";
+import { checkLessons, updateLessons } from "../model/slice";
 import { Typography } from "@/shared/typography";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { ROUTES } from "@/app/navigationTypes";
@@ -23,8 +20,6 @@ type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, typeof
 const LearningListPage: React.FC = () => {
   const navigation = useNavigation<LearnResultsNavigationProp>();
   const dispatch = useAppDispatch();
-
-  const { t } = useTranslation();
 
   const { colors } = useThemeContext();
 
@@ -48,23 +43,32 @@ const LearningListPage: React.FC = () => {
   };
 
   const chapters = useAppSelector((state) => state.lessons.chapters)
+  const hash = useAppSelector((state) => state.lessons.hash)
   const chaptersLang = useAppSelector((state) => state.lessons.lang)
 
-  useEffect(() => {    
+  const fetchLessons = () => {
     if (chaptersLang !== lessonsKey) {
-      dispatch(updateLessons({
-        lang: lessonsKey
-      }))
+      return dispatch(updateLessons({ lang: lessonsKey }))
     }
 
     if (!chapters || chapters.length === 0) {
-      dispatch(updateLessons({ lang: lessonsKey }))
+      return dispatch(updateLessons({ lang: lessonsKey }))
     }
 
     if (!chapters[0]?.title) {
-      dispatch(updateLessons({ lang: lessonsKey }))
+      return dispatch(updateLessons({ lang: lessonsKey }))
     }
+  }
+
+  useEffect(() => {
+    fetchLessons();
   }, [chapters, chaptersLang, lessonsKey])
+
+  useEffect(() => {
+    if (hash) {
+      dispatch(checkLessons({ lang: lessonsKey, hash }))
+    }
+  }, [])
 
   const isShowChapters = chapters[0]?.title;
 

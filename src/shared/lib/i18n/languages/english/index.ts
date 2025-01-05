@@ -6,6 +6,7 @@ const English = {
     retry: "Retry",                 // For example, retrying a lesson
     complete: "Complete",           // For example, completing the last screen of a lesson
     start: "Start",                 // For example, starting a new lesson
+    welcome: "Welcome",
   },
 
   tabs: {
@@ -105,6 +106,8 @@ const English = {
       githubRepository: "GitHub Repository", // Subtitle of the button leading to GitHub
     },
     version: "Version",                       // Application version, e.g., Version 2.24.3
+
+    changeLanguageCaption: "You can change the application language in the settings."
   },
 
   result: {

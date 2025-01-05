@@ -8,6 +8,8 @@ import Spanish from "./languages/spanish";
 import French from "./languages/french";
 import Italian from "./languages/italian";
 import Portuguese from "./languages/portuguese";
+import Chinese from "./languages/chinese/chinese";
+import Korean from "./languages/korean";
 
 const resources = {
 	en: { translation: English },
@@ -17,6 +19,8 @@ const resources = {
 	fr: { translation: French },
 	it: { translation: Italian },
 	pt: { translation: Portuguese },
+	ch: { translation: Chinese },
+	ko: { translation: Korean },
 };
 
 i18n

@@ -6,6 +6,7 @@ const French = {
     retry: "Réessayer",              // Par exemple, recommencer une leçon
     complete: "Terminer",            // Par exemple, terminer l'écran final d'une leçon
     start: "Commencer",              // Par exemple, commencer une nouvelle leçon
+    welcome: "Bienvenue"
   },
 
   tabs: {
@@ -105,6 +106,8 @@ const French = {
       githubRepository: "Dépôt GitHub",           // Sous-titre du bouton menant à GitHub
     },
     version: "Version",                             // Version de l'application, par exemple Version 2.24.3
+
+    changeLanguageCaption: "Vous pouvez changer la langue de l'application dans les paramètres."
   },
 
   result: {

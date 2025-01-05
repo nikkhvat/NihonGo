@@ -82,7 +82,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
           )}
         </View>
         <View style={[styles.info, { width: screenWidth - 130 }]}>
-          <Text style={[Typography.boldH4, { color: colors.BgContrast, marginTop: 12 }]}>{title}</Text>
+          <Text style={[Typography.boldH4, { color: colors.BgContrast, marginTop: 12, maxWidth: 180 }]}>{title}</Text>
           <Text style={[Typography.regularParagraph, { color: colors.BgContrast }]}>
             {subtitle}
           </Text>

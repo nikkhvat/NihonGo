@@ -6,6 +6,7 @@ const Italian = {
     retry: "Riprova",              // Ad esempio, ripetere una lezione
     complete: "Completa",          // Ad esempio, completare l'ultima schermata di una lezione
     start: "Inizia",               // Ad esempio, iniziare una nuova lezione
+    welcome: "Benvenuti"
   },
 
   tabs: {
@@ -105,6 +106,8 @@ const Italian = {
       githubRepository: "Repository GitHub", // Sottotitolo del pulsante che porta a GitHub
     },
     version: "Versione",                        // Versione dell'applicazione, ad esempio Versione 2.24.3
+
+    changeLanguageCaption: "Puoi cambiare la lingua dell'applicazione nelle impostazioni."
   },
 
   result: {
