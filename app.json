@@ -5,7 +5,7 @@
     "privacy": "public",
     "version": "2.1.5",
     "orientation": "portrait",
-    "githubUrl": "https://github.com/nikkhvat/kana-master",
+    "githubUrl": "https://github.com/nikkhvat/NihonGo",
     "icon": "./src/shared/assets/icon.png",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
@@ -25,8 +25,11 @@
       },
       "package": "pro.khvat.learnjapanese",
       "version": "2.1.5",
-      "versionCode": 6,
-      "newArchEnabled": true
+      "versionCode": 7,
+      "newArchEnabled": true,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./src/shared/assets/favicon.png"
