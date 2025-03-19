@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
@@ -17,7 +17,6 @@ import { recalculate } from "@/pages/kana/kana-table-list-page/model/slice";
 import { countAvailableWords } from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 import {
   CardMode,
-  DifficultyLevelType,
   KanaAlphabet,
   QuestionMode,
 } from "@/shared/constants/kana";
@@ -30,6 +29,7 @@ import { useNavigation } from '@react-navigation/native';
 import PracticeDrawKana from "@/entities/education/practice/practice-draw-kana/practice-draw-kana";
 import PracticeTypeKana from "@/entities/education/practice/practice-type-kana/practice-type-kana";
 import { Typography } from "@/shared/typography";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type ScreenNavigationProp = StackNavigationProp< RootStackParamList, typeof ROUTES.PRACTICE_TESTING >;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.PRACTICE_TESTING>;
@@ -38,9 +38,9 @@ interface LearnScreenProps {
   route: LearnScreenRouteProp;
 }
 
-const screenHeight = Dimensions.get("window").height;
-
 function EducationPractice({ route }: LearnScreenProps) {
+  const { height } = useWindowDimensions()
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation<ScreenNavigationProp>();
 
   useEffect(() => {
@@ -63,15 +63,8 @@ function EducationPractice({ route }: LearnScreenProps) {
     (state: RootState) => state.kana.selected,
   );
 
-  const { keysCardModeState, timerDeration, keysDifficultyLevelState, questionMode } =
+  const { keysCardModeState, timerDeration, questionMode } =
     route.params;
-
-  const IS_TIMER = keysDifficultyLevelState.includes(
-    DifficultyLevelType.TimeTest,
-  );
-  const ONE_ATTEMPT = keysDifficultyLevelState.includes(
-    DifficultyLevelType.OneAttempt,
-  );
 
   const IS_CARDS = questionMode === QuestionMode.Choose;
   const IS_BRASH = questionMode === QuestionMode.Brash;
@@ -147,11 +140,7 @@ function EducationPractice({ route }: LearnScreenProps) {
   };
 
   const onSubmit = (trueAnswer: boolean) => submit(trueAnswer, finishCallback);
-  const onError = () => {
-    if (ONE_ATTEMPT) {
-      onSubmitTestQuestion(false, question.symbol);
-    }
-  };
+  const onError = () => onSubmitTestQuestion(false, question.symbol);
 
   const endTime = () => onSubmitTestQuestion(false);
 
@@ -173,6 +162,22 @@ function EducationPractice({ route }: LearnScreenProps) {
 
   const question = questions[currentIndex];
 
+  if (IS_TYPE && question) {
+    return (
+      <View style={{
+        paddingTop: insets.top + 20,
+        height: "100%"
+      }} >
+        <PracticeTypeKana
+          symbol={question?.symbol}
+          kana={question?.kana}
+          onCompleted={onSubmitTestQuestion}
+          onError={onError}
+        />
+      </View>
+    )
+  }
+
   return (
     <SafeLayout
       additionalPaddingTop={20}
@@ -180,7 +185,7 @@ function EducationPractice({ route }: LearnScreenProps) {
         styles.container,
         {
           backgroundColor: colors.BgPrimary,
-          gap: screenHeight < 700 ? 0 : 22,
+          gap: height < 700 ? 0 : 22,
         },
       ]}
     >
@@ -191,7 +196,7 @@ function EducationPractice({ route }: LearnScreenProps) {
           all={questions.length}
         />}
 
-        {IS_TIMER && (
+        {IS_CARDS && (
           <EducationPracticeTimer
             customStyles={{}}
             currentIndex={currentIndex}
@@ -211,13 +216,6 @@ function EducationPractice({ route }: LearnScreenProps) {
       {IS_BRASH && question && <PracticeDrawKana
         symbol={question?.symbol}
         kana={question.mode}
-        onCompleted={onSubmitTestQuestion}
-        onError={onError}
-      />}
-      
-      {IS_TYPE && question && <PracticeTypeKana
-        symbol={question?.symbol}
-        kana={question?.kana}
         onCompleted={onSubmitTestQuestion}
         onError={onError}
       />}

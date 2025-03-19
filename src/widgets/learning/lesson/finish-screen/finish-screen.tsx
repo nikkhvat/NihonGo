@@ -11,6 +11,7 @@ import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { LearningTitle } from "../ui/title";
 import { Typography } from "@/shared/typography";
 import { isIOS } from "@/shared/constants/platformUtil";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 
 type FinishScreenProps = LessonFinish & {
   next: () => void;
@@ -26,7 +27,7 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
     const chance = Math.random();
 
     try {
-      if (isIOS() && chance <= 0.1) {
+      if (isIOS && chance <= 0.1) {
         StoreReview.requestReview();
       }
     } catch (error) {
@@ -48,7 +49,7 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <PrimaryButton isHapticFeedback isOutline isFullWidth text={t("common.retry")} onClick={retry} />
+        <SecondaryButton isHapticFeedback isOutline isFullWidth text={t("common.retry")} onClick={retry} />
         <PrimaryButton
           isHapticFeedback
           isFullWidth

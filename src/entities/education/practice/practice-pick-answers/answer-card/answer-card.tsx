@@ -27,8 +27,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
 
   const { colors } = useThemeContext();
 
-  const cardColor = redMarked ? colors.BgDanger : greenMarked ? colors.BgSuccess : colors.BgPrimary;
-  const borderColor = redMarked ? colors.BgDanger : greenMarked ? colors.BgSuccess : colors.BorderDefault;
+  const cardColor = redMarked ? colors.BgDanger : greenMarked ? colors.BgSuccess : colors.BgSecondary;
   const textColor = (redMarked || greenMarked) ? colors.TextContrastSecondary : colors.TextPrimary;
 
   return (
@@ -37,7 +36,6 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
       containerStylesFunc={({ pressed }) => ({
         width: width,
         height: width,
-        borderColor: pressed ? colors.BorderDefault : borderColor,
         backgroundColor: pressed ? colors.BgPrimaryPressed : cardColor,
         borderRadius: 24,
       })}

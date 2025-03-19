@@ -1,6 +1,6 @@
+import React, { ReactNode } from "react";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
-import React, { ReactNode } from "react";
 
 import { Text, StyleSheet, Pressable, DimensionValue, StyleProp, TextStyle, ViewStyle } from "react-native";
 import { useHaptic } from "@/shared/helpers/haptic";
@@ -11,10 +11,9 @@ interface SecondaryButtonProps {
   text?: string;
   icon?: React.ReactElement;
 
-  isGray?: boolean;
-
   isDisabled?: boolean;
   isOutline?: boolean;
+  isGray?: boolean;
 
   width?: DimensionValue;
   isFullWidth?: boolean;
@@ -22,6 +21,7 @@ interface SecondaryButtonProps {
   isHapticFeedback?: boolean;
 
   containerStyles?: StyleProp<ViewStyle>;
+  containerStylesFunc?: (option: { pressed: boolean }) => StyleProp<ViewStyle>;
   textStyles?: StyleProp<TextStyle>;
 
   children?: React.ReactElement;
@@ -35,10 +35,9 @@ const SecondaryButton: React.FC<SecondaryButtonProps> = ({
   text,
   icon,
 
-  isGray,
-
   isDisabled,
   isOutline,
+  isGray,
 
   width,
   isFullWidth,
@@ -46,38 +45,33 @@ const SecondaryButton: React.FC<SecondaryButtonProps> = ({
   isHapticFeedback,
 
   containerStyles,
+  containerStylesFunc,
   textStyles,
 
   children,
 
   onClick,
 }) => {
-  const { colors } = useThemeContext();
-
   const { triggerHaptic } = useHaptic();
+  const { colors } = useThemeContext();
 
   const onPress = () => {
     if (isDisabled) return;
 
     triggerHaptic(isHapticFeedback);
-
-    if (!isDisabled) {
-      onClick?.();
-    }
+    onClick?.();
   };
 
-  const getButtonStyles = (pressed: boolean) => [
+  const getButtonStyles = (pressed: boolean): StyleProp<ViewStyle> => [
     isFullWidth ? { flex: 1 } : { width },
 
     {
       backgroundColor: colors.BgAccentPrimary,
-      borderColor: colors.BgAccentPrimary,
     },
 
     pressed &&
     !isOutline && {
       backgroundColor: colors.BgAccentPrimaryPressed,
-      borderColor: colors.BgAccentPrimaryPressed,
     },
 
     isGray && {
@@ -89,24 +83,30 @@ const SecondaryButton: React.FC<SecondaryButtonProps> = ({
     },
 
     isOutline && {
-      backgroundColor: colors.BgPrimary,
-      borderColor: colors.BorderDefault,
+      backgroundColor: colors.BgSecondary,
     },
 
     isDisabled && {
       backgroundColor: colors.BgLightGray,
-      borderColor: colors.BgLightGray,
     },
 
     pressed &&
     isOutline &&
     !isDisabled && {
       backgroundColor: colors.BgPrimaryPressed,
-      borderColor: colors.BorderDefault,
+    },
+
+    icon && {
+      flexDirection: "row",
+      gap: 6,
+      justifyContent: "center",
+      alignItems: "center",
+      height: 50,
     },
 
     styles.button,
     containerStyles && containerStyles,
+    containerStylesFunc?.({ pressed }),
   ];
 
   const getTextStyles = () => [
@@ -140,13 +140,9 @@ const SecondaryButton: React.FC<SecondaryButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    flexDirection: "row",
-    gap: 6,
     justifyContent: "center",
     alignItems: "center",
     height: 50,
-
-    borderWidth: 1,
 
     borderRadius: 12,
   },

@@ -12,11 +12,10 @@ const SettingsSection: React.FC<SettingSectionProps> = ({ children }) => {
   return (
     <View
       style={{
-        marginHorizontal: 20,
-        borderRadius: 10,
+        marginHorizontal: 16,
         paddingLeft: 16,
-        borderWidth: 1,
-        borderColor: colors.BorderDefault,
+        borderRadius: 12,
+        backgroundColor: colors.BgSecondary
       }}
     >
       {children}

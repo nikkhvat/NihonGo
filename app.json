@@ -1,9 +1,8 @@
 {
   "expo": {
-    "name": "NihonGo",
+    "name": "Nihon Master",
     "slug": "kana-master",
-    "privacy": "public",
-    "version": "2.1.5",
+    "version": "2.2.2",
     "orientation": "portrait",
     "githubUrl": "https://github.com/nikkhvat/NihonGo",
     "icon": "./src/shared/assets/icon.png",
@@ -14,7 +13,7 @@
     "ios": {
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
-      "bundleIdentifier": "pro.khvat.learnjapanese",
+      "bundleIdentifier": "pro.khvat.kanamaster",
       "buildNumber": "0",
       "newArchEnabled": true
     },
@@ -24,8 +23,8 @@
         "backgroundColor": "#1F1F1F"
       },
       "package": "pro.khvat.learnjapanese",
-      "version": "2.1.5",
-      "versionCode": 7,
+      "version": "2.2.2",
+      "versionCode": 1,
       "newArchEnabled": true,
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO"

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { Dimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 
 import { KanaAlphabet, TEST_DELAY } from "@/shared/constants/kana";
 import { LessonSelectSequenceLetters } from "@/shared/constants/lessons";
@@ -17,14 +17,13 @@ type SelectSequenceLettersProps = LessonSelectSequenceLetters & {
   kana: KanaAlphabet;
 };
 
-const screenWidth = Dimensions.get("window").width;
-
 const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
   sequence,
   kana,
   next,
 }) => {
   const { colors } = useThemeContext();
+  const { width } = useWindowDimensions()
   const [states, setStates] = useState<(null | false | true)[]>();
 
   const { getRomanji } = useGetRomanji();
@@ -96,7 +95,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
           <PrimaryButton
             isHapticFeedback
             containerStyles={{
-              width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
+              width: rowLength > 18 ? "100%" : (width - 55) / 2,
               height: 50,
               backgroundColor: states?.[index] === true
                 ? colors.BgSuccess : states?.[index] === false
@@ -108,7 +107,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
             }}
             isOutline
             key={button}
-            width={(rowLength > 18 ? "100%" : (screenWidth - 55) / 2) as number}
+            width={(rowLength > 18 ? "100%" : (width - 55) / 2) as number}
             text={button}
             onClick={() => submit(button)}
           />

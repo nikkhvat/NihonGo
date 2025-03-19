@@ -11,6 +11,7 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSymbol } from "@/shared/constants/lessons";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { LearningTitle } from "../ui/title";
+import BorderLetter from "@/entities/education/letter/borderLetter/borderLetter";
 
 type LessonSymbolScreenProps = LessonSymbol & {
   next: () => void;
@@ -33,16 +34,7 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({
           {t("lesson.rememberWritingAndSoundLetter")}
         </LearningTitle>
 
-        <View
-          style={[
-            styles.symbolContainer,
-            {
-              borderColor: colors.BorderDefault,
-            },
-          ]}
-        >
-          <Symbol id={symbol?.id} kana={kana} />
-        </View>
+        <BorderLetter marginTop={0} kana={kana} id={symbol?.id} />
 
         <View style={styles.bottomRow}>
           <SoundLetter width={50} id={symbol.id} />
@@ -67,10 +59,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "flex-start",
-  },
-  symbolContainer: {
-    borderWidth: 1,
-    borderRadius: 24
   },
   buttonContainer: {
     width: "100%",

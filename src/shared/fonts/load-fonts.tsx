@@ -11,14 +11,14 @@ interface LoadFontsProps {
 export const loadFonts = async ({ successful, error, finallyCallback }: LoadFontsProps) =>  {
   try {
     await Font.loadAsync({
-      ...(isAndroid() ? {
+      ...(isAndroid ? {
         'NotoSansJP-Black': require('./NotoSansJP-Black.ttf'),
         'NotoSansJP-Bold': require('./NotoSansJP-Bold.ttf'),
         'NotoSansJP-Medium': require('./NotoSansJP-Medium.ttf'),
         'NotoSansJP-Regular': require('./NotoSansJP-Regular.ttf'),
         'NotoSansJP-SemiBold': require('./NotoSansJP-SemiBold.ttf'),
       } : {}),
-      ...(isIOS() ? {
+      ...(isIOS ? {
         'SFProText-Regular': require('./SFProText-Regular.ttf'),
         'SFProDisplay-Semibold': require('./SFProDisplay-Semibold.ttf'),
       } : {}),

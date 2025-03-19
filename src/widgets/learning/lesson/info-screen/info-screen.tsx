@@ -82,13 +82,14 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
         style={[
           styles.btnsContainer,
           {
-            paddingLeft: insets.left + 20,
-            paddingRight: insets.right + 20,
+            paddingLeft: insets.left + 16,
+            paddingRight: insets.right + 16,
           },
         ]}
       >
         {!isLast && (
           <PrimaryButton
+            isHapticFeedback
             isFullWidth
             text={t("common.next")}
             onClick={nextScreen}
@@ -113,8 +114,8 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
           paddingBottom: 22,
         }}
         style={{
-          paddingLeft: insets.left + 20,
-          paddingRight: insets.right + 20,
+          paddingLeft: insets.left + 19,
+          paddingRight: insets.right + 19,
           width: "100%",
         }}
       >

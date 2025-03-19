@@ -4,8 +4,6 @@ import { Pressable, StyleProp, View, ViewStyle } from "react-native";
 interface IconButtonProps {
   onPress: () => void,
 
-  style?: StyleProp<ViewStyle>,
-
   children: React.ReactNode
 }
 

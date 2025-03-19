@@ -43,11 +43,11 @@ export const enumerationLanguageList = [
 ];
 
 export const languageList = [
-  { title: LanguageName.ch, key: ShortLanguage.CH },
   { title: LanguageName.en, key: ShortLanguage.EN },
+  { title: LanguageName.ru, key: ShortLanguage.RU },
+  { title: LanguageName.ch, key: ShortLanguage.CH },
   { title: LanguageName.es, key: ShortLanguage.ES },
   { title: LanguageName.pt, key: ShortLanguage.PT },
-  { title: LanguageName.ru, key: ShortLanguage.RU },
   { title: LanguageName.fr, key: ShortLanguage.FR },
   { title: LanguageName.de, key: ShortLanguage.DE },
   { title: LanguageName.it, key: ShortLanguage.IT },

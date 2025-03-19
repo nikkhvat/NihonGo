@@ -37,7 +37,7 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({
     Alert.alert(localizedConfirmationTitle, localizedConfirmationSubtitle, [
       { text: t('alert.cancel'), style: 'cancel' },
       { text: t('alert.ok'), onPress: () => {
-        triggerHaptic();
+        triggerHaptic(true);
         close?.();
       } },
     ]);
@@ -45,13 +45,19 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({
   return (
     <View style={styles.progressBarContainer}>
       <View style={[styles.progressBarLine, { backgroundColor: colors.BgLightGray }]}>
-        <View style={[
-          styles.progressBarLineActive, 
-          { 
-            width: current + 1 >= all ? '100%' : `${((current + 1) / all) * 100}%`,
-            backgroundColor: colors.BgContrast,
-          },
-        ]} />
+
+        {Array.from({ length: all }, (_, index) => index).map(item => <View style={[
+          styles.progressBarLineActive,
+          {
+            width: `${(100 / all)}%`,
+            backgroundColor: current > item ? colors.BgContrast : colors.BgLightGray,
+          }
+        ]} key={`progress-bar-item-${item}`} >
+
+          <Text>
+            {item}
+          </Text>
+        </View>)}
       </View>
       <View style={styles.progressBarBottom}>
         <TouchableOpacity style={styles.progressBarPressble} onPress={() => {
@@ -80,6 +86,9 @@ const styles = StyleSheet.create({
   },
   progressBarLine: {
     width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   progressBarLineActive: {
     height: 4,

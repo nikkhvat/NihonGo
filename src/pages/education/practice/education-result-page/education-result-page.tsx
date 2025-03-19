@@ -51,7 +51,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route }) => {
     const chance = Math.random();
 
     try {
-      if (isIOS() && chance <= 0.1) {
+      if (isIOS && chance <= 0.1) {
         StoreReview.requestReview();
       }
     } catch (error) {

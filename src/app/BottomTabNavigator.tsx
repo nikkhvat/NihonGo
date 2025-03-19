@@ -13,6 +13,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { Typography } from "@/shared/typography";
 import { ROUTES } from "./navigationTypes";
 import { isIOS } from "@/shared/constants/platformUtil";
+import { useBottomTabVisibility } from "@/shared/contexts/BottomTabVisibilityContext";
 
 const icons = {
   [ROUTES.LEARNING_ROOT]: "school-outline",
@@ -30,6 +31,8 @@ export const TabBarButton = ({ state, navigation }: BottomTabBarProps) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
+  const { isVisible } = useBottomTabVisibility();
+
   const { triggerHaptic } = useHaptic()  
 
   const { colors } = useThemeContext();
@@ -41,13 +44,15 @@ export const TabBarButton = ({ state, navigation }: BottomTabBarProps) => {
     [ROUTES.KANA_TABLE_ROOT]: t('tabs.kana'),
   }
 
+  if (!isVisible) return;
+
   return (
     <View style={{ 
       flexDirection: 'row',
       paddingLeft: insets.left,
       paddingRight: insets.right,
       paddingBottom: insets.bottom,
-      height: insets.bottom + (isIOS() ? 52 : 62),
+      height: insets.bottom + (isIOS ? 52 : 62),
       alignItems: "center",
       borderTopColor: colors.BorderDefault,
       borderTopWidth: 1,
@@ -56,7 +61,7 @@ export const TabBarButton = ({ state, navigation }: BottomTabBarProps) => {
         const isFocused = state.index === index;
 
         const onPress = () => {
-          triggerHaptic();
+          triggerHaptic(true);
 
           const event = navigation.emit({
             type: 'tabPress',

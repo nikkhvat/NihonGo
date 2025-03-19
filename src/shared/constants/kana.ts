@@ -21,11 +21,6 @@ export enum PracticeWordMode {
   FindPair = "find_pair",
 }
 
-export enum DifficultyLevelType {
-  TimeTest = "time_test",
-  OneAttempt = "one_attempt",
-}
-
 export enum PracticeScreenMode {
   Testing = "testing",
   WordGame = "word_game"
@@ -90,7 +85,7 @@ export const LETTERS_COUNT = {
   yoon: 36,
 };
 
-export const TEST_DELAY = 300;
+export const TEST_DELAY = 400;
 
 export type Alphabet = "base" | "dakuon" | "handakuon" | "yoon"
 

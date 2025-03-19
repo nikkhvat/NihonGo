@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { View, Text, StyleSheet, Animated, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Animated, useWindowDimensions } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -13,9 +13,6 @@ interface EducationPracticeTimerProps {
   customStyles?: Record<string, string | number>;
 }
 
-const screenWidth = Dimensions.get("window").width;
-
-const progressBarWidth = screenWidth - 40 - 95;
 
 const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   initial = 5,
@@ -24,12 +21,14 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   questions,
   customStyles = {},
 }) => {
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
 
   const animatedValue = useRef(new Animated.Value(5)).current;
   const [timeLeft, setTimeLeft] = useState(initial);
 
-  const progressBarWidthItem = (screenWidth - 40 - 95) / initial;
+  const progressBarWidth = width - 40 - 95;
+  const progressBarWidthItem = (width - 40 - 95) / initial;
 
   const set = (val: number) => {
     Animated.timing(animatedValue, {

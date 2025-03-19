@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Dimensions, View, ScrollView, StyleSheet } from "react-native";
+import { Dimensions, View, ScrollView, StyleSheet, useWindowDimensions } from "react-native";
 
 import { RootState } from "@/app/store";
 import Cell from "@/entities/kana/cell/cell";
@@ -28,18 +28,19 @@ interface EducationKanaTableProps {
   last?: boolean;
 }
 
-const screenWidth = Dimensions.get("window").width;
-const screenAdaptiveWidth =
-  screenWidth > 500 ? screenWidth * 0.68 : screenWidth;
-const itemWidth = screenAdaptiveWidth / 6 - 16;
-const itemWidthLong = screenAdaptiveWidth / 3 - itemWidth / 3 - 23;
-
 const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
   last,
 }) => {
+  const { width } = useWindowDimensions()
   const dispatch = useAppDispatch();
+
+  const screenAdaptiveWidth =
+    width > 500 ? width * 0.68 : width;
+  const itemWidth = screenAdaptiveWidth / 6 - 16;
+  const itemWidthLong = screenAdaptiveWidth / 3 - itemWidth / 3 - 23;
+
 
   const { colors } = useThemeContext();
 
@@ -243,8 +244,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
             isPlus
             onPress={() => dispatch(setKanaSelected(getKanaSelected()))}
             isStartOfLine={!isKanaSelected() ? 
-              <Icon name={"check-all"} size={18} color={isKanaSelected() ? colors.IconContrast : colors.IconPrimary} /> :
-              <Icon name={"close"} size={18} color={isKanaSelected() ? colors.IconContrast : colors.IconPrimary} />
+              <Icon name={"check-all"} size={18} color={colors.IconPrimary} /> :
+              <Icon name={"close"} size={18} color={colors.IconPrimary} />
             }
           />
 
@@ -261,8 +262,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 isPlus
                 onPress={() => onPlus?.("cell", cellIndex, type)}
                 isStartOfLine={!cell.column ?
-                  <Icon name={"plus"} size={18} color={cell.column ? colors.IconContrast : colors.IconPrimary} /> :
-                  <Icon name={"minus"} size={18} color={cell.column ? colors.IconContrast : colors.IconPrimary} />
+                  <Icon name={"plus"} size={18} color={colors.IconPrimary} /> :
+                  <Icon name={"minus"} size={18} color={colors.IconPrimary} />
                 }
               />
             );
@@ -285,8 +286,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 onPress={() => onPlus?.("row", rowIndex, type)}
                 active={row.activeInRow}
                 isStartOfLine={!row.activeInRow ?
-                  <Icon name={"plus"} size={18} color={row.activeInRow ? colors.IconContrast : colors.IconPrimary} /> :
-                  <Icon name={"minus"} size={18} color={row.activeInRow ? colors.IconContrast : colors.IconPrimary} />
+                  <Icon name={"plus"} size={18} color={colors.IconPrimary} /> :
+                  <Icon name={"minus"} size={18} color={colors.IconPrimary} />
                 }
               />
             </View>

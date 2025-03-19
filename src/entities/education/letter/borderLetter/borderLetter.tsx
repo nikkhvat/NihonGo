@@ -9,18 +9,19 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 type borderLetterProps = {
   id: string
   kana: KanaAlphabet
+
+  marginTop?: number;
 }
 
-const BorderLetter: React.FC<borderLetterProps> = ({ id, kana }) => {
+const BorderLetter: React.FC<borderLetterProps> = ({ id, kana, marginTop }) => {
   const { colors } = useThemeContext();
 
   return (
     <View>
       <View style={{
-        borderColor: colors.BorderDefault,
-        borderWidth: 1,
+        backgroundColor: colors.BgSecondary,
         borderRadius: 12,
-        marginTop: 30
+        marginTop: marginTop !== undefined ? marginTop : 30,
       }} >
         <Symbol id={id} kana={kana} />
       </View>

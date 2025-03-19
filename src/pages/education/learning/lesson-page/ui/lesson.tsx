@@ -83,15 +83,14 @@ const Lesson: React.FC<LessonProps> = ({ lesson }) => {
 
   return (
     <SafeLayout
-      additionalPaddingTop={20}
       disableLeft
       disableRight
       style={styles.container}
     >
       <View
         style={{
-          paddingLeft: insets.left + 20,
-          paddingRight: insets.right + 20,
+          paddingLeft: insets.left + 16,
+          paddingRight: insets.right + 16,
         }}
       >
         {(isManuallyLesson(lesson)
@@ -105,6 +104,7 @@ const Lesson: React.FC<LessonProps> = ({ lesson }) => {
           />
         )}
       </View>
+      
       {isAutoLesson(lesson) &&
         isAnyScreen &&
         currentScreen?.name !== LessonScreen.Finish && (
@@ -112,8 +112,8 @@ const Lesson: React.FC<LessonProps> = ({ lesson }) => {
             style={[
               styles.container,
               {
-                paddingLeft: insets.left + 20,
-                paddingRight: insets.right + 20,
+                paddingLeft: insets.left + 16,
+                paddingRight: insets.right + 16,
               },
             ]}
           >
@@ -190,8 +190,8 @@ const Lesson: React.FC<LessonProps> = ({ lesson }) => {
             style={[
               styles.container,
               {
-                paddingLeft: insets.left + 20,
-                paddingRight: insets.right + 20,
+                paddingLeft: insets.left + 16,
+                paddingRight: insets.right + 16,
               },
             ]}
           >

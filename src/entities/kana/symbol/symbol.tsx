@@ -3,7 +3,7 @@ import React from "react";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { getImage } from "@/shared/resources/svgs";
-import { Dimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { verticalScale } from "@/shared/helpers/metrics";
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 
@@ -17,21 +17,16 @@ interface SymbolProps {
   isGray?: boolean
 }
 
-
-const screenWidth = Dimensions.get("window").width;
-
-const canvasSize =
-  screenWidth -
-  40 -
-  (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
-
 const Symbol: React.FC<SymbolProps> = ({
   id,
   kana,
 
   isGray,
 }) => {
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
+
+  const canvasSize = width - 40 - (width > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
 
   const getImagePath = (key: string | undefined) => {
     const keyString = `${kana}_${key?.replaceAll("-", "_")}`;

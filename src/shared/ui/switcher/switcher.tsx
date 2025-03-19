@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   Animated,
   Pressable,
@@ -29,9 +28,10 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
   const { activeTab, setActiveTab, options, translate } = props;
 
   const { colors } = useThemeContext();
-  const { triggerHaptic } = useHaptic()
+  const { triggerHaptic } = useHaptic();
 
   const animatedValue = useRef(new Animated.Value(0)).current;
+  const animatedColor = useRef(new Animated.Value(0)).current;
   const [tabWidth, setTabWidth] = useState(0);
 
   useEffect(() => {
@@ -41,7 +41,13 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
       toValue: index * tabWidth,
       useNativeDriver: true,
     }).start();
-  }, [activeTab, animatedValue, options.length, tabWidth]);
+
+    Animated.timing(animatedColor, {
+      toValue: index,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [activeTab, animatedValue, animatedColor, options.length, tabWidth]);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const offset = 2;
@@ -51,30 +57,35 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
 
   return (
     <View style={[styles.content, { width: props.width ? props.width : "100%" }, props.customStyles]} onLayout={onLayout}>
-      <View style={[styles.tabs, { backgroundColor: colors.BgAccentSecondary }]}>
-        {options.map((tab, index) => (
-          <Pressable
-            key={tab}
-            onPress={() => {
-              setActiveTab(options[index]);
-              triggerHaptic();
-            }}
-            style={[styles.tab]}
-          >
-            <Text style={[Typography.boldH4, { color: colors.TextPrimary }]}>
-              {translate && translate.length === options.length
-                ? translate[index]
-                : tab}
-            </Text>
-          </Pressable>
-        ))}
+      <View style={[styles.tabs, { backgroundColor: colors.BgSecondary }]}>
+        {options.map((tab, index) => {
+          const colorInterpolation = animatedColor.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [colors.TextPrimary, colors.TextContrastPrimary, colors.TextPrimary],
+            extrapolate: "clamp",
+          });
+          return (
+            <Pressable
+              key={tab}
+              onPress={() => {
+                setActiveTab(options[index]);
+                triggerHaptic(true);
+              }}
+              style={[styles.tab]}
+            >
+              <Animated.Text style={[Typography.boldH4, { color: colorInterpolation }]}>
+                {translate && translate.length === options.length ? translate[index] : tab}
+              </Animated.Text>
+            </Pressable>
+          );
+        })}
         <Animated.View
           style={[
             styles.indicator,
             {
               width: tabWidth,
               transform: [{ translateX: animatedValue }],
-              backgroundColor: colors.BgPrimary,
+              backgroundColor: colors.BgContrast,
             },
           ]}
         />

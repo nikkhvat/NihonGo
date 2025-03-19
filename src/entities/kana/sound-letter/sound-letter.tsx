@@ -32,7 +32,7 @@ const SoundLetter: React.FC<SoundLetterProps> = ({ id, width }) => {
   };
 
   const soundIcon = (
-    <Icon name={"ear-hearing"} size={24} color={colors.IconPrimary} />
+    <Icon name={"volume-high"} size={24} color={colors.IconPrimary} />
   );
 
   return (

@@ -73,7 +73,6 @@ const Italian = {
 
   selectKana: {
     words: "Parole",                // Ad esempio, sono state selezionate 100 parole per l'apprendimento
-    letters: "Sillabe",             // Ad esempio, sono state selezionate 5 sillabe (か き く け こ)
     nothingSelected: "Nessuna selezione" // Quando non è stato selezionato nulla e bisogna indicarlo
   },
 

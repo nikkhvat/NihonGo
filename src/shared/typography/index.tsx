@@ -1,12 +1,12 @@
 import { TextStyle, StyleSheet } from "react-native";
 import { isAndroid } from "../constants/platformUtil";
 
-const fontTitleFamilyBold = isAndroid() ? "NotoSansJP-Bold" : "SFProDisplay-Bold";
-const fontTitleFamilyRegular = isAndroid() ? "NotoSansJP-Medium" : "SFProDisplay-Regular";
+const fontTitleFamilyBold = isAndroid ? "NotoSansJP-Bold" : "SFProDisplay-Bold";
+const fontTitleFamilyRegular = isAndroid ? "NotoSansJP-Medium" : "SFProDisplay-Regular";
 
-const fontTextFamilyRegular = isAndroid() ? "NotoSansJP-Medium" : "SFProText-Regular";
-const fontTextFamilySemibold = isAndroid() ? "NotoSansJP-SemiBold" : "SFProDisplay-Semibold";
-const fontTextFamilyBold = isAndroid() ? "NotoSansJP-SemiBold" : "SFProText-Bold";
+const fontTextFamilyRegular = isAndroid ? "NotoSansJP-Medium" : "SFProText-Regular";
+const fontTextFamilySemibold = isAndroid ? "NotoSansJP-SemiBold" : "SFProDisplay-Semibold";
+const fontTextFamilyBold = isAndroid ? "NotoSansJP-SemiBold" : "SFProText-Bold";
 
 export const fonts = {
   regular: { fontFamily: fontTextFamilyRegular, fontWeight: '400' },
@@ -28,6 +28,14 @@ export const TypographyRegularH1: TextStyle = {
   fontFamily: fontTitleFamilyRegular,
   fontSize: 28,
   lineHeight: 32,
+  fontWeight: "400",
+};
+
+// Regular H2
+export const TypographyRegularH2: TextStyle = {
+  fontFamily: fontTextFamilyRegular,
+  fontSize: 22,
+  lineHeight: 26,
   fontWeight: "400",
 };
 
@@ -170,6 +178,7 @@ export const TypographyBoldLabel: TextStyle = {
 export const Typography = StyleSheet.create({
   regularLarge: TypographyRegularLarge,
   regularH1: TypographyRegularH1,
+  regularH2: TypographyRegularH2,
   regularH3: TypographyRegularH3,
   regularH4: TypographyRegularH4,
   regularParagraph: TypographyRegularParagraph,

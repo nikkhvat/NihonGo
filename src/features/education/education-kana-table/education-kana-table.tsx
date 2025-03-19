@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 
-import { Dimensions, View, StyleSheet } from "react-native";
+import { useWindowDimensions, View, StyleSheet } from "react-native";
+
 
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -23,12 +24,6 @@ interface EducationKanaTableProps {
   last?: boolean;
 }
 
-const screenWidth = Dimensions.get("window").width;
-const screenAdaptiveWidth =
-  screenWidth > TABLET_WIDTH ? screenWidth * 0.75 : screenWidth;
-const itemWidth = screenAdaptiveWidth / 6 - 14;
-const itemWidthLong = screenAdaptiveWidth / 3 - itemWidth / 3 - 23;
-
 const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
@@ -47,6 +42,11 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
         return yoon;
     }
   }, [type]);
+
+  const { width } = useWindowDimensions()
+
+  const itemWidth = width / 6 - 14;
+  const itemWidthLong = width / 3 - itemWidth / 3 - 23;
 
   const levels = useAppSelector((state) => state.statistics.statistics[kana]);
   const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);

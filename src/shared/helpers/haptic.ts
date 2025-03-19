@@ -12,11 +12,11 @@ export function useHaptic() {
   );
 
   const triggerHaptic = (isEnable?: boolean) => {
-    if (!isEnabledHaptic || isEnable !== undefined && isEnable !== true) {
+    if (!isEnabledHaptic || !isEnable) {
       return
     }
 
-    if (isIOS()) {
+    if (isIOS) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } else {
       Vibration.vibrate(1);
@@ -26,11 +26,11 @@ export function useHaptic() {
   const triggerSuccessNotification = () => {
     if (!isEnabledHaptic) return
 
-    if (isIOS()) {
+    if (isIOS) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } 
     
-    if (isAndroid()) {
+    if (isAndroid) {
       Vibration.vibrate(SUCCESS_PATTERN);
     }
   };
@@ -38,11 +38,11 @@ export function useHaptic() {
   const triggerErrorNotification = () => {
     if (!isEnabledHaptic) return
 
-    if (isIOS()) {
+    if (isIOS) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     }
 
-    if (isAndroid()) {
+    if (isAndroid) {
       Vibration.vibrate(ERROR_PATTERN)
     }
   };

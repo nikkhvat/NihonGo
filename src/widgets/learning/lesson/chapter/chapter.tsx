@@ -17,7 +17,7 @@ type ChapterProps = {
   title: string
   lessons: (AutoLesson | ManuallyLesson)[]
   startLesson: (item: AutoLesson | ManuallyLesson) => void
-  isLast: boolean
+  isLast: boolean;
 }
 
 const Chapter: React.FC<ChapterProps> = ({
@@ -145,12 +145,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 22,
     marginTop: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   subtitle: {
     marginTop: 10,
     marginBottom: 22,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   line: {
     width: "100%",

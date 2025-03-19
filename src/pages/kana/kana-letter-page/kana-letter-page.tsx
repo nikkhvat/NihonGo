@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp, TransitionPresets } from "@react-navigation/stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import Draw from "@/entities/education/draw/draw";
-import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
@@ -36,6 +36,14 @@ import { Typography } from "@/shared/typography";
 interface KanaInfoProps {
   route: RouteProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
   navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
+
+  customProps?: {
+    id: string,
+    kana: KanaAlphabet
+  }
+
+  onClose?: () => void;
+  isOnlyDrawing?: boolean;
 }
 
 enum Screen {
@@ -43,7 +51,7 @@ enum Screen {
   Draw,
 }
 
-const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
+const KanaLetterPage: React.FC<KanaInfoProps> = ({ route, customProps, isOnlyDrawing, onClose }) => {
   const navigation = useNavigation();
 
   const { t } = useTranslation();
@@ -51,11 +59,11 @@ const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
 
   const { colors } = useThemeContext();
 
-  const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
+  const { id: LetterIdFromParams, kana: kanaFromParams } = route.params || customProps;
 
   const [letterId, setLetterId] = useState(LetterIdFromParams);
   const [letterKana, setLetterKana] = useState(kanaFromParams);
-  const [currentScreen, setCurrentScreen] = useState(Screen.Symbol);
+  const [currentScreen, setCurrentScreen] = useState(isOnlyDrawing ? Screen.Draw : Screen.Symbol);
 
   const leftIcon = (
     <Icon name={"chevron-left"} size={24} color={colors.IconPrimary} />
@@ -91,13 +99,16 @@ const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
   const switchButtonText = `${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")}`;
 
   useEffect(() => {
-    navigation.setOptions(isAndroid() ? {
-      title: headerTitle,
-      headerTitleStyle: [Typography.semiBoldH4, { color: colors.TextPrimary }],
-      headerShadowVisible: false,
-    } : {
-      headerTitleAlign: "center",
-      headerLeft: () => (
+    navigation.setOptions({
+      header: () => <View style={{
+        paddingLeft: insets.left + 16,
+        paddingRight: insets.right + 16,
+        backgroundColor: "transparent",
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }} >
         <IconButton onPress={switchScreen}>
           <Icon
             name={currentScreen === Screen.Draw ? "chevron-left" : "close"}
@@ -105,10 +116,12 @@ const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
             color={colors.IconPrimary}
           />
         </IconButton>
-      ),
-      title: headerTitle,
-      headerShadowVisible: false,
-      presentation: 'modal'
+        <Text style={[Typography.semiBoldH4, { color: colors.TextPrimary }]} >
+          {headerTitle}
+        </Text>
+
+        <View style={{ width: 50 }} ></View>
+      </View>
     });
   }, [navigation, currentScreen, letterKana]);
 
@@ -148,15 +161,28 @@ const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
     <AdaptiveLayout style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.symbolContainer}>
-          <SymbolHeader
-            indicatorColor={isEnabledStats ? letterStat?.level : null}
-            hideTitle
-            kana={letterKana}
-            letter={letter as unknown as ILetter}
-          />
+          
+          <View style={{
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }} >
+            <SymbolHeader
+              indicatorColor={isEnabledStats ? letterStat?.level : null}
+              hideTitle
+              kana={letterKana}
+              letter={letter as unknown as ILetter}
+            />
+          </View>
 
-            <View style={{ marginTop: 16 }}>
-            {currentScreen === Screen.Symbol && <Symbol id={letter.id} kana={letterKana} />}
+            <View style={{ marginTop: 16 }}> 
+            {currentScreen === Screen.Symbol && <View style={{
+              backgroundColor: colors.BgSecondary,
+              borderRadius: 24,
+            }} >
+              <Symbol id={letter.id} kana={letterKana} />
+            </View>}
 
             {currentScreen === Screen.Draw && (
               <Draw
@@ -184,7 +210,7 @@ const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
           )}
         </View>
 
-        <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
+        {!isOnlyDrawing && <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
           <SecondaryButton
             isHapticFeedback
             icon={leftIcon}
@@ -209,7 +235,7 @@ const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
             width={50}
             onClick={() => nextLetter()}
           />
-        </View>
+        </View>}
       </View>
     </AdaptiveLayout>
   );

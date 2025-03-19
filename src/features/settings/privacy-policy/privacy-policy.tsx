@@ -12,7 +12,7 @@ const PrivacyPolicy: React.FC = () => {
   return (
     <SettingItem
       text={t('settings.privacyPolicy')}
-      link={isAndroid() ? androidLink : iosLink}
+      link={isAndroid ? androidLink : iosLink}
     />
   );
 };

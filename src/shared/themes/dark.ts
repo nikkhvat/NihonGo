@@ -1,15 +1,17 @@
 const darkTheme = {
   // Background
-  BgPrimary: "#1F1F1F",
-  BgPrimaryPressed: "#2A2A2A",
+  BgPrimary: "#1E1E1E",
+  BgSecondary: "#2A2A2A",
+  BgPrimaryPressed: "#3A3A3A",
   BgLightGray: "#3A3A3A",
-  BgGray: "#969696",
   BgContrast: "#FFFFFF",
   BgContrastPressed: "#ECECEC",
+  BgContrastSecondary: "#2A2A2A",
+  BgContrastPrimary: "#1F1F1F",
   BgAccentPrimary: "#C08D6B",
   BgAccentPrimaryPressed: "#9A7861",
-  BgAccentSecondary: "#4B4745",
-  BgAccentSecondaryPressed: "#3C3836",
+  BgAccentSecondary: "#4B4745",             // Больше не использовать 
+  BgAccentSecondaryPressed: "#3C3836",      // Больше не использовать
   BgSuccess: "#60BA53",
   BgWarning: "#F0B153",
   BgDanger: "#EF625D",
@@ -30,9 +32,11 @@ const darkTheme = {
   TextContrastSecondary: "#FFFFFF",
   TextTabBar: "#C08D6B",
   TextSuccess: "#60BA53",
+  TextDanger: "#EF625D",
 
   // Icon
   IconPrimary: "#FFFFFF",
+  IconPrimaryPressed: "#ECECEC",
   IconSecondary: "#969696",
   IconContrast: "#FFFFFF",
   IconAccent: "#C08D6B",

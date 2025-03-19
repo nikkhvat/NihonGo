@@ -144,7 +144,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
       setScreen((prev) => prev + 1);
     }
 
-    triggerHaptic();
+    // triggerHaptic(true);
   };
 
   const retry = () => {

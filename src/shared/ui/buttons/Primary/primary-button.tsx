@@ -1,7 +1,6 @@
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
-import { FC, ReactNode } from "react";
 
 import { Text, StyleSheet, Pressable, StyleProp, ViewStyle, TextStyle, DimensionValue } from "react-native";
 import { useHaptic } from "@/shared/helpers/haptic";
@@ -59,7 +58,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   const onPress = () => {
     if (isDisabled) return;
 
-    triggerHaptic(isHapticFeedback)
+    triggerHaptic(isHapticFeedback);
     onClick?.();
   };
 
@@ -125,8 +124,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 50,
-
-    borderWidth: 1,
 
     borderRadius: 12,
   },

@@ -11,6 +11,8 @@ import { ThemeProvider } from "@/features/settings/settings-theme/theme-context"
 import "@/shared/lib/i18n/index"; 
 import { TransliterationsProvider } from "@/features/settings/settings-transliterations/context/transliteration";
 
+import { BottomTabVisibilityProvider } from '@/shared/contexts/BottomTabVisibilityContext/index';
+
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 const App = () => {
@@ -21,7 +23,9 @@ const App = () => {
           <ActionSheetProvider> 
             <ThemeProvider>
               <TransliterationsProvider>
-                <Layout />
+                <BottomTabVisibilityProvider>
+                  <Layout />
+                </BottomTabVisibilityProvider>
               </TransliterationsProvider>
             </ThemeProvider>
           </ActionSheetProvider>

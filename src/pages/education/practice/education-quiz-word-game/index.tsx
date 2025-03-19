@@ -22,7 +22,7 @@ const EducationWordGamePage: React.FC<LearnScreenProps> = ({ route }) => {
     <EducationPracticeContextProvider>
       <EducationStatisticContextProvider>
         <AdaptiveLayout style={{ flex: 1 }} >
-        <EducationWordGame route={route} />
+          <EducationWordGame route={route} />
         </AdaptiveLayout>
       </EducationStatisticContextProvider>
     </EducationPracticeContextProvider>

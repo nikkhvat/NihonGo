@@ -32,7 +32,7 @@ import KanaTableListPage from "@/pages/kana/kana-table-list-page/kana-table-list
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabBarButton } from "./BottomTabNavigator";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import { isAndroid } from "@/shared/constants/platformUtil";
@@ -117,15 +117,9 @@ const DemoLayout = () => {
     loadLang();
   }, [i18n]);
 
-  // useEffect(() => {
-  //   if (screen === 1) {
-  //     navigation.navigate(ROUTES.PRACTICE_ROOT)
-  //   }
-  // }, [screen])
-
-  if (isAndroid()) {
-    SystemUI.setBackgroundColorAsync(colors.BgPrimary);
-    NavigationBar.setBackgroundColorAsync(colors.BgPrimary);
+  if (isAndroid) {
+    // SystemUI.setBackgroundColorAsync(colors.BgPrimary);
+    // NavigationBar.setBackgroundColorAsync(colors.BgPrimary);
   }
 
   if (!appIsReady) {
@@ -140,10 +134,10 @@ const DemoLayout = () => {
 
   return (
     <>
-      <StatusBar
+      {/* <StatusBar
         barStyle={barStyle}
         backgroundColor={colors.BgPrimary}
-      />
+      /> */}
 
       <WelcomePage />
       <RootNavigation theme={currentTheme} />

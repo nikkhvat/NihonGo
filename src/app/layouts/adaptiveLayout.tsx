@@ -1,11 +1,9 @@
 import React, { ReactNode } from "react";
 
-import { Dimensions, StyleProp, View, ViewStyle } from "react-native";
+import { StyleProp, useWindowDimensions, View, ViewStyle } from "react-native";
 
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { verticalScale } from "@/shared/helpers/metrics";
-
-const screenWidth = Dimensions.get("window").width;
 
 interface AdaptiveLayoutProps {
   style?: StyleProp<ViewStyle>
@@ -16,13 +14,14 @@ const AdaptiveLayout: React.FC<AdaptiveLayoutProps> = ({
   style = {},
   children
 }) => {
+  const { width } = useWindowDimensions()
+  
   return (
-    <View style={[{
-      paddingHorizontal: screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0,
-    },
-    style]}>
+    <>
       {children}
-    </View>
+    </>
+    // <View style={[{ paddingHorizontal: width > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0 }, style]}>
+    // </View>
   );
 };
 

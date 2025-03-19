@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { SectionList, StyleSheet, Text, View } from "react-native";
+import { SectionList, StatusBar, StyleSheet, Text, View } from "react-native";
 
 import EducationKanaTable from "@/features/education/education-kana-table/education-kana-table";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -14,15 +14,31 @@ import { ROUTES } from "@/app/navigationTypes";
 import { Typography } from "@/shared/typography";
 import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
 import { getTypeById } from "@/shared/helpers/kana-letter";
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
+
+import PageTitle from "@/shared/ui/page-title/page-title";
 
 type ScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_TABLE_ROOT>;
 
 const MemoizedEducationKanaTable = React.memo(EducationKanaTable);
+interface KanaInfoProps {
+  route: RouteProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
+  navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
+}
 
-export const KanaTableListPage: React.FC = () => {
+export const KanaTableListPage: React.FC<KanaInfoProps> = () => {
+  const { colors } = useThemeContext();  
+
   const navigation = useNavigation<ScreenNavigationProp>();
 
+  const barStyle = colors._theme === "dark" ? "light-content" : "dark-content";
+
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBarStyle(barStyle, true);
+    }, [])
+  );
+  
   useEffect(() => {
     navigation.setOptions({
       gestureEnabled: false,
@@ -53,13 +69,14 @@ export const KanaTableListPage: React.FC = () => {
     [t]
   );
 
-  const { colors } = useThemeContext();  
-
   return (
+    <>
+    <PageTitle isSaveArea isKey>{ROUTES.KANA_TABLE_ROOT}</PageTitle>
+    
     <View style={{ flex: 1, backgroundColor: colors.BgPrimary }} >
-      {isIOS() && <View style={[styles.lineContainer, { top: 92, backgroundColor: colors.BorderDefault }]} />}
+      {isIOS && <View style={[styles.lineContainer, { top: 92, backgroundColor: colors.BorderDefault }]} />}
       
-      <View style={{ paddingBottom: isAndroid() ? 20 : 0, paddingHorizontal: 20 }}>
+      <View style={{ paddingBottom: isAndroid ? 20 : 0, paddingHorizontal: 20 }}>
         <Switcher<KanaAlphabet>
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -95,6 +112,7 @@ export const KanaTableListPage: React.FC = () => {
         )}
       />
     </View>
+    </>
   );
 };
 

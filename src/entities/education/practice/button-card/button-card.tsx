@@ -1,6 +1,6 @@
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import React, { ReactNode } from "react";
-import { StyleProp, View, ViewStyle, Text, Dimensions } from "react-native";
+import { StyleProp, View, ViewStyle, Text, useWindowDimensions } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
@@ -20,28 +20,28 @@ interface ButtonCardProps<T extends string> {
   isDisabled?: boolean;
 }
 
-const screenWidth = Dimensions.get("window").width;
 
 function ButtonCard<T extends string>({
   icon,
   text,
   contentTop,
   content,
-
+  
   isGray,
-
+  
   setValue,
   currentValue,
   value,
   
   isDisabled,
 }: ButtonCardProps<T>) {
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
   
   const buttonStyle: StyleProp<ViewStyle> = {
     flexDirection: "column",
     alignItems: "flex-start",
-    width: screenWidth/2 - 28,
+    width: width /2 - 28,
     gap: 60,
     height: "auto",
     padding: 14,

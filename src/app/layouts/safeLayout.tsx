@@ -28,9 +28,9 @@ const SafeLayout: React.FC<SafeLayoutProps> = ({
     <View style={[
       { 
         paddingTop: !disableTop ? insets.top + additionalPaddingTop : 0, 
-        paddingBottom: !disableButton ? insets.bottom + 20 : 0,
-        paddingLeft: !disableLeft ? insets.left + 20 : 0,
-        paddingRight: !disableRight ? insets.right + 20 : 0
+        paddingBottom: !disableButton ? insets.bottom + 16 : 0,
+        paddingLeft: !disableLeft ? insets.left + 16 : 0,
+        paddingRight: !disableRight ? insets.right + 16 : 0
       }, 
       style
     ]}>

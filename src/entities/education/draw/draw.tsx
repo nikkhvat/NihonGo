@@ -1,5 +1,5 @@
 import React, { useRef, useReducer, useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import {
   GestureHandlerRootView,
@@ -29,8 +29,6 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Typography } from "@/shared/typography";
 import { normalizeCoordinates } from "@/shared/helpers/hieroglyph-recognition/coordinates";
 
-const { width } = Dimensions.get("window");
-
 enum StateColor {
   Green = "Green",
   Red = "Red",
@@ -42,13 +40,13 @@ interface DrawProps {
 
   isCheck?: boolean;
 
+  isFullHeight?: boolean;
+
   isTextRecognition?: boolean;
 
   onError?: (id: number | string) => void;
   onCompleted?: (isErrors: boolean, pickedAnswer: ILetter) => void;
 }
-
-const screenWidth = Dimensions.get("window").width;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getTypeById = (id: any) => {
@@ -59,7 +57,8 @@ const getTypeById = (id: any) => {
   return "kana.basic";
 };
 
-const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, onError, onCompleted }) => {
+const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, isFullHeight, onError, onCompleted }) => {
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
@@ -68,7 +67,7 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  const canvasSize = width - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
+  const canvasSize = width - 32 - (width > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
 
   const strokeWidth =
     useAppSelector((state) => state.profile?.draw?.lineWidth) || 14;
@@ -164,7 +163,7 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
 
     const result = recognizer.recognize(strokes);
     const isSomeKana = result
-      ?.some(symbol => symbol.name === (kana === KanaAlphabet.Hiragana ? letter.hi : letter.ka));
+      ?.some(symbol => symbol.name[0] === (kana === KanaAlphabet.Hiragana ? letter.hi : letter.ka));
 
     if (isSomeKana) {
       setState(StateColor.Green)
@@ -191,7 +190,7 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
   }, [letter])
 
   return (
-    <GestureHandlerRootView style={{ height: canvasSize + 165 }}>
+    <GestureHandlerRootView style={[{ height: canvasSize + 165 }, isFullHeight ? {flex: 1, justifyContent: "space-between"} : {}]}>
       <View>
         <PanGestureHandler
           onGestureEvent={onGestureEvent}
@@ -214,10 +213,38 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
               right: 0,
               width: "100%",
               height: "100%",
-              borderWidth: state === StateColor.NotInitialized ? 1 : 2,
-              borderColor: state === StateColor.NotInitialized ? colors.BorderDefault
-                : state === StateColor.Green ? colors.BorderSuccess : colors.BorderDanger,
+              borderWidth: 1,
+              borderColor: colors.BorderDefault,
             }} />
+
+            {state !== StateColor.NotInitialized && <View style={{
+              position: "absolute",
+              backgroundColor: colors.BgSecondary,
+              width: 90,
+              height: 90,
+              right: 0,
+              zIndex: 999,
+              borderWidth: 1,
+              borderColor: colors.BorderDefault,
+              borderTopRightRadius: 24,
+              borderBottomLeftRadius: 24,
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2
+            }} >
+              {state === StateColor.Green && <Icon name={"circle-outline"} size={32} color={colors.TextSuccess} />}
+              {state === StateColor.Green && <Text style={[
+                { color: colors.TextSuccess },
+                Typography.boldH3
+              ]}>まる</Text>}
+              {state === StateColor.Red && <Icon name={"close"} size={32} color={colors.TextDanger} />}
+              {state === StateColor.Red && <Text style={[
+                { color: colors.TextDanger },
+                Typography.boldH3
+              ]}>ばつ</Text>}
+            </View>}
+
             {isShowLetter && !isCheck && (
               <View
                 style={[
@@ -297,7 +324,7 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
         </View>
       </View>
 
-      {isCheck && <PrimaryButton onClick={detectSymbol} text={t("practice.check")} />}
+      {isCheck && <PrimaryButton isHapticFeedback onClick={detectSymbol} text={t("practice.check")} />}
     </GestureHandlerRootView>
   );
 };

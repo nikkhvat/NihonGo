@@ -51,7 +51,7 @@ const SettingItem: React.FC<SettingItemProps> = ({
         !subText ? { height: 44 } : { height: 64 },
       ]}
       onPress={() => {
-        triggerHaptic()
+        triggerHaptic(true)
         
         if (link) {
           Linking.openURL(link);
@@ -94,7 +94,7 @@ const SettingItem: React.FC<SettingItemProps> = ({
           thumbColor={isEnable ? colors.BgPrimary : colors.BgPrimary}
           ios_backgroundColor={colors.BgLightGray}
           onValueChange={() => {
-            triggerHaptic()
+            triggerHaptic(true)
             onValueChange?.();
           }}
           value={isEnable}

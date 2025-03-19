@@ -2,37 +2,23 @@ import React from "react";
 
 import { useTranslation } from "react-i18next";
 import {
-  Dimensions,
-  ImageBackground,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from "react-native";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { TABLET_WIDTH } from "@/shared/constants/app";
 import { useAppSelector } from "@/shared/model/hooks";
-import wordGame from "@/shared/resources/preview/cover.jpg";
 import { Typography } from "@/shared/typography";
-import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 
 export enum CardType {
   Practice = "practice",
   WordGame = "word_game",
 }
 
-type EducationKanaSelectedCardProps = {
-  imageSource: CardType.Practice | CardType.WordGame;
-  onEdit?: () => void;
-};
-
-const screenWidth = Dimensions.get("window").width;
-
-const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
-  imageSource,
-  onEdit,
-}) => {
+const EducationKanaSelectedCard: React.FC = () => {
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
@@ -46,75 +32,62 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
 
   const selectedWords = useAppSelector((state) => state.kana.selectedWords);
 
-  const preview = wordGame;
-
-  const value =
-    imageSource === CardType.WordGame
-      ? selectedWords.hiragana.length + selectedWords.katakana.length
-      : selectedLettersHiragana + selectedLettersKatakana;
-
-  const label =
-    imageSource === CardType.WordGame
-      ? t("selectKana.words")
-      : t("selectKana.letters");
+  const widthCard = (width / 2) - 24;
 
   return (
-    <ImageBackground
-      source={preview}
-      resizeMode="cover"
-      style={styles.container}
-    >
-      <View style={[styles.content, { backgroundColor: colors.BgPrimary }]}>
+    <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16, marginTop: 32 }} >
+      <View style={[styles.content, {
+        backgroundColor: colors.BgContrastSecondary,
+        width: widthCard
+      }]}>
         <View style={styles.header}>
-          <Text style={[Typography.boldH1, { color: colors.TextPrimary }]}>
-            {value}
+          <Text style={[Typography.boldH1, { color: colors.TextContrastSecondary }]}>
+            {selectedLettersHiragana + selectedLettersKatakana}
           </Text>
         </View>
-        {value === 0 && (
+        {(selectedLettersHiragana + selectedLettersKatakana) === 0 && (
+          <Text
+            style={[Typography.regularLabel, { color: colors.TextContrastSecondary }]}
+          >
+            {t("selectKana.nothingSelected")}
+          </Text>
+        )}
+        {(selectedLettersHiragana + selectedLettersKatakana) !== 0 && (
+          <Text
+            style={[Typography.regularLabel, { color: colors.TextSecondary }]}
+          >
+            {selectedLettersHiragana ? t("kana.hiragana") : " "}
+            {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0 ? " & " : ""}
+            {selectedLettersKatakana ? t("kana.katakana") : " "}
+          </Text>
+        )}
+      </View>
+      <View style={[styles.content, { backgroundColor: colors.BgContrastSecondary, width: widthCard }]}>
+        <Text style={[Typography.boldH1, { color: colors.TextContrastSecondary }]}>
+          {selectedWords.hiragana.length + selectedWords.katakana.length}
+        </Text>
+        {(selectedWords.hiragana.length + selectedWords.katakana.length) === 0 && (
           <Text
             style={[Typography.regularLabel, { color: colors.TextSecondary }]}
           >
             {t("selectKana.nothingSelected")}
           </Text>
         )}
-        {value !== 0 && (
+        {(selectedWords.hiragana.length + selectedWords.katakana.length) !== 0 && (
           <Text
             style={[Typography.regularLabel, { color: colors.TextSecondary }]}
           >
-            {label}
-            {" / "}
-            {selectedLettersHiragana ? t("kana.hiragana") : " "}
-            {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0 ? " & " : ""}
-            {selectedLettersKatakana ? t("kana.katakana") : " "}
+            {t("selectKana.words")}
           </Text>
         )}
-        <PrimaryButton
-          isHapticFeedback
-          isOutline
-          containerStyles={styles.button}
-          onClick={onEdit}
-          icon={<Icon name="filter-outline" size={29} color={colors.IconPrimary} />}
-        />
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
 export default EducationKanaSelectedCard;
 
 const styles = StyleSheet.create({
-  container: {
-    height: screenWidth > TABLET_WIDTH ? 360 : 240,
-    borderRadius: 24,
-    overflow: "hidden",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    paddingBottom: 16,
-    position: "relative",
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
   header: {
     display: "flex",
     justifyContent: "flex-start",
@@ -123,7 +96,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   content: {
-    width: "100%",
     borderRadius: 12,
     height: 80,
     flexDirection: "column",

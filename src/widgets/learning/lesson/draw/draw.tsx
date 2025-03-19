@@ -26,18 +26,17 @@ const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <View>
-        <LearningTitle>
-          {t("lesson.drawSyllable", { syllable: symbol.transliterations[transliterations] })}
-        </LearningTitle>
+      <LearningTitle>
+        {t("lesson.drawSyllable", { syllable: symbol.transliterations[transliterations] })}
+      </LearningTitle>
 
-        <Draw
-          isCheck
-          kana={kana}
-          letter={symbol}
-          onCompleted={(error) => next(!error)}
-        />
-      </View>
+      <Draw
+        isFullHeight
+        isCheck
+        kana={kana}
+        letter={symbol}
+        onCompleted={(error) => next(!error)}
+      />
     </View>
   );
 };
@@ -47,8 +46,6 @@ export default LessonDrawScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    alignItems: "flex-start",
   },
   buttonContainer: {
     width: "100%",

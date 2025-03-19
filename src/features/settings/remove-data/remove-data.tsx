@@ -79,7 +79,7 @@ const RemoveData: React.FC = () => {
       { text: t('alert.cancel'), style: 'cancel' },
       {
         text: t('alert.confirm'), onPress: () => {
-          triggerHaptic();
+          triggerHaptic(true);
           eraseData();
         }
       },

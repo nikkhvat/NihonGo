@@ -1,15 +1,17 @@
 const lightTheme = {
   // Background
   BgPrimary: "#FFFFFF",
-  BgPrimaryPressed: "#F6F6F6",
+  BgSecondary: "#F6F6F6",
+  BgPrimaryPressed: "#ECECEC",
   BgLightGray: "#ECECEC",
-  BgGray: "#BDBDBD",
   BgContrast: "#2A2A2A",
   BgContrastPressed: "#1E1E1E",
+  BgContrastSecondary: "#363636",
+  BgContrastPrimary: "#2A2A2A",
   BgAccentPrimary: "#9A7861",
   BgAccentPrimaryPressed: "#856753",
-  BgAccentSecondary: "#F0EBE5",
-  BgAccentSecondaryPressed: "#E9E0D4",
+  BgAccentSecondary: "#F0EBE5",        // Больше не использовать
+  BgAccentSecondaryPressed: "#E9E0D4", // Больше не использовать
   BgSuccess: "#7ABC71",
   BgWarning: "#F6BF6C",
   BgDanger: "#F4817D",
@@ -30,9 +32,11 @@ const lightTheme = {
   TextContrastSecondary: "#FFFFFF",
   TextTabBar: "#9A7861",
   TextSuccess: "#7ABC71",
+  TextDanger: "#F4817D",
 
   // Icon
   IconPrimary: "#2A2A2A",
+  IconPrimaryPressed: "#1E1E1E",
   IconSecondary: "#BDBDBD",
   IconContrast: "#FFFFFF",
   IconAccent: "#9A7861",

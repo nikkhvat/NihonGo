@@ -34,6 +34,8 @@ const SettingsLanguage: React.FC = () => {
 
 
   const onPress = () => {
+    console.log("ON CLICK LANGUAGE")
+
     const options = [
       t('alert.cancel'),
       LanguageName.ch,

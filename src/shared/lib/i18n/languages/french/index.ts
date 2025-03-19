@@ -73,7 +73,6 @@ const French = {
 
   selectKana: {
     words: "Mots",                  // Par exemple, 100 mots sélectionnés pour l'apprentissage
-    letters: "Syllabes",            // Par exemple, 5 syllabes sélectionnées (か き く け こ)
     nothingSelected: "Rien n'est sélectionné" // Lorsque rien n'est sélectionné et qu'il faut l'indiquer
   },
 

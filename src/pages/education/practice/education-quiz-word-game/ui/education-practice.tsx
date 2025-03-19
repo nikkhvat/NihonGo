@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
@@ -98,6 +98,8 @@ function EducationWordGame({ route }: LearnScreenProps) {
   const isFindPair = question?.type === QuestionTypeFindPairWord;
   const isBuildingWord = question?.type === QuestionTypeBuildingWord;
   const isChooseWord = question?.type === QuestionTypeChooseWord;
+
+  if (questions.length === currentIndex) return;
 
   return (
     <SafeLayout

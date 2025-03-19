@@ -25,6 +25,14 @@ interface LanguageItemProps {
   onClick: (key: ShortLanguage) => void;
 }
 
+const BetaFlag = () => {
+  const { colors } = useThemeContext();
+
+  return <View style={{ backgroundColor: colors.BgAccentSecondary, paddingHorizontal: 10, borderRadius: 8, justifyContent: "center", alignItems: "center" }} >
+    <Text style={[{ color: colors.TextPrimary }, Typography.regularCaption]} >βeta</Text>
+  </View>
+}
+
 const LanguageItem: React.FC<LanguageItemProps> = ({ active, langKey, name, onClick }) => {
   const { triggerHaptic } = useHaptic();
   const { colors } = useThemeContext();
@@ -38,18 +46,21 @@ const LanguageItem: React.FC<LanguageItemProps> = ({ active, langKey, name, onCl
           pressed ? colors.BgPrimaryPressed : colors.BgPrimary
       }]}
       onPress={() => {
-        triggerHaptic();
+        triggerHaptic(true);
         onClick(langKey)
       }}
     >
-      <View style={styles.languageLeft} >
-        <CountryFlag
-          style={[styles.languageFlag, { borderColor: active === langKey ? colors.BgAccentPrimary : colors.BorderDefault }]}
-          isoCode={langKey === ShortLanguage.EN ? "gb" : langKey === ShortLanguage.CH ? "cn" : langKey === ShortLanguage.KO ? "kr" : langKey}
-          size={24}
-        />
+      <View style={[styles.languageLeft, { justifyContent: "space-between", width: "92%" }]} >
+        <View style={styles.languageLeft}  >
+          <CountryFlag
+            style={[styles.languageFlag, { borderColor: active === langKey ? colors.BgAccentPrimary : colors.BorderDefault }]}
+            isoCode={langKey === ShortLanguage.EN ? "gb" : langKey === ShortLanguage.CH ? "cn" : langKey === ShortLanguage.KO ? "kr" : langKey}
+            size={24}
+          />
 
-        <Text style={[Typography.semiBoldH4, { color: active === langKey ? colors.TextContrastSecondary : colors.TextPrimary, textAlignVertical: "center" }]} >{name}</Text>
+          <Text style={[Typography.semiBoldH4, { color: active === langKey ? colors.TextContrastSecondary : colors.TextPrimary, textAlignVertical: "center" }]} >{name}</Text>
+        </View>
+        {langKey !== ShortLanguage.EN && langKey !== ShortLanguage.RU && <BetaFlag />}
       </View>
 
       {active === langKey && <Icon name={"check-bold"} size={16} color={colors.IconContrast} />}

@@ -10,8 +10,8 @@ import {
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { shuffleArray } from "@/shared/helpers/letters";
-import PrimaryButton from "../../../shared/ui/buttons/Primary/primary-button";
 import { Typography } from "@/shared/typography";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 
 type SequenceProps = {
   sequence: string[];
@@ -95,16 +95,10 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
     letter: null | { letter: string; index: number },
     idx: number,
   ) => {
-    return {
-      borderColor:
-        letter === null && selectedLetters[idx - 1] !== null
-          ? colors.BgAccentPrimary
-          : trueAnswers[idx] === null
-            ? colors.BgLightGray
-            : trueAnswers[idx]
-              ? colors.BgSuccess
-              : colors.BgDanger,
-    };
+    if (letter === null && selectedLetters[idx - 1] !== null) return { borderColor: colors.BgAccentPrimary }
+    if (trueAnswers[idx] === null) return { borderColor: colors.BgLightGray }
+    if (trueAnswers[idx]) return { borderColor: colors.BgSuccess }
+    return { borderColor: colors.BgDanger }
   };
 
   return (
@@ -137,7 +131,7 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
           if (selected) return <View key={key} style={styles.emptyButton} />
 
           return (
-            <PrimaryButton
+            <SecondaryButton
               key={key}
               width={50}
               isOutline

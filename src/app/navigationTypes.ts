@@ -2,7 +2,7 @@ import { AutoLesson, ManuallyLesson } from "../shared/constants/lessons";
 
 import { ResultInfoWordGame } from "@/pages/education/practice/education-quiz-word-game/lib/context/education-statistic-context";
 import { ResultInfo } from "@/pages/education/practice/education-quiz-testing/lib/context/education-statistic-context";
-import { CardMode, DifficultyLevelType, KanaAlphabet, QuestionMode, PracticeWordMode } from "@/shared/constants/kana";
+import { CardMode, KanaAlphabet, QuestionMode, PracticeWordMode } from "@/shared/constants/kana";
 
 export const ROUTES = {
   ROOT: 'Root',
@@ -79,7 +79,6 @@ interface PracticeWordGame {
 
 interface PracticeTesting {
   keysCardModeState: CardMode[],
-  keysDifficultyLevelState: DifficultyLevelType[]
   questionMode: QuestionMode
   timerDeration ?: "fast" | "medium" | "slow"
 }

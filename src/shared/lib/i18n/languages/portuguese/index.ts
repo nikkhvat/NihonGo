@@ -73,7 +73,6 @@ const Portuguese = {
 
   selectKana: {
     words: "Palavras",              // Por exemplo, 100 palavras selecionadas para aprendizado
-    letters: "Sílabas",             // Por exemplo, 5 sílabas selecionadas (か き く け こ)
     nothingSelected: "Nada selecionado" // Quando nada foi selecionado e isso precisa ser indicado
   },
 

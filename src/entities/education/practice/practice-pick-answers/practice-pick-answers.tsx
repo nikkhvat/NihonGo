@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 
 import AnswerCard from "./answer-card/answer-card";
 
@@ -26,7 +26,7 @@ interface EducationPracticeSelectAnswersProps {
 const EducationPracticeSelectAnswers: React.FC<
   EducationPracticeSelectAnswersProps
 > = ({ question, onError, onCompleted }) => {
-  const screenWidth = Dimensions.get("window").width;
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
@@ -62,11 +62,8 @@ const EducationPracticeSelectAnswers: React.FC<
   const isCorrectAnswer = (id: string): boolean => id === corrected;
   const isInCorrectAnswer = (id: string): boolean => errors.includes(id);
 
-  const width =
-    screenWidth -
-    (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) -
-    20 * 2;
-  const widthCard = (width - 16) / 2;
+  const widthItem = width - (width > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) - 16 * 2;
+  const widthCard = (widthItem - 16) / 2;
 
   const kana = question?.kana;
   const symbol = question?.symbol;

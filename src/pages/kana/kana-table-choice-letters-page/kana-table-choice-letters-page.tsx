@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, Text, SectionList, StyleSheet } from "react-native";
+import { View, Text, SectionList, StyleSheet, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
@@ -15,17 +15,17 @@ import Switcher from "@/shared/ui/switcher/switcher";
 import { Typography } from "@/shared/typography";
 import { ROUTES } from "@/app/navigationTypes";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
-import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
+import { isIOS } from "@/shared/constants/platformUtil";
 import { useNavigation } from "@react-navigation/native";
 
 type ScreenNavigationProps = StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_SELECT>;
 
 const KanaTableChoiceLettersPage: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProps>();
+  const { colors } = useThemeContext();
 
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation();
-  const { colors } = useThemeContext();
   const insets = useSafeAreaInsets();
 
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(KanaAlphabet.Hiragana);
@@ -41,25 +41,17 @@ const KanaTableChoiceLettersPage: React.FC = () => {
   );
 
   useEffect(() => {
-    navigation.setOptions(isAndroid() ?  {
-      title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
-      headerTitleStyle: [Typography.semiBoldH4, { color: colors.TextPrimary }],
-      headerShadowVisible: false,
-    } : {
-      header: () => <View style={{
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+    navigation.setOptions({
+      header: () => <View style={[styles.header, {
         paddingLeft: insets.left + 20,
         paddingRight: insets.right + 20,
         backgroundColor: colors.BgPrimary,
-      }} >
+      }]} >
         <PrimaryButton
           isOutline
           containerStyles={{
             borderWidth: 0,
-            backgroundColor: colors.BgPrimary
+            backgroundColor: "transparent"
           }}
           textStyles={{
             ...Typography.regularH4,
@@ -77,16 +69,14 @@ const KanaTableChoiceLettersPage: React.FC = () => {
           isOutline
           containerStyles={{
             borderWidth: 0,
-            backgroundColor: colors.BgPrimary
+            backgroundColor: "transparent"
           }}
           textStyles={{
-            color: colors.BgPrimary
+            color: "transparent"
           }}
           text={t("common.close")}
         />
-      </View>,
-      headerShadowVisible: false,
-      presentation: 'modal'
+      </View>
       }
     );
   }, [activeTab, dispatch, navigation, t]);
@@ -94,7 +84,7 @@ const KanaTableChoiceLettersPage: React.FC = () => {
   return (
     <>
       <View style={{ flex: 1, backgroundColor: colors.BgPrimary, paddingBottom: 40 + insets.bottom }}>
-        {isIOS() && <View style={[styles.lineContainer, { top: 44, backgroundColor: colors.BorderDefault }]} />}
+        {isIOS && <View style={[styles.lineContainer, { top: 44, backgroundColor: colors.BorderDefault }]} />}
         <SectionList
           sections={sections}
           keyExtractor={(item, index) => item + index}
@@ -152,6 +142,12 @@ export default KanaTableChoiceLettersPage;
 
 
 const styles = StyleSheet.create({
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   content: {
     height: 52,
     flexDirection: "row",

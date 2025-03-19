@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    height: 62,
   },
   title: {
     fontSize: 17,

@@ -10,6 +10,7 @@ import { ROUTES } from "@/app/navigationTypes";
 
 interface PageTitleProps {
   children: React.ReactNode
+  icon?: React.ReactNode
   style?: StyleProp<TextStyle>
   isSaveArea?: boolean
   isKey?: boolean
@@ -22,6 +23,7 @@ type IconType = typeof ROUTES.LEARNING_ROOT
 
 const PageTitle: React.FC<PageTitleProps> = ({
   children,
+  icon,
   style = {},
   isSaveArea,
   isKey
@@ -37,17 +39,34 @@ const PageTitle: React.FC<PageTitleProps> = ({
     [ROUTES.SETTINGS_ROOT]: t('tabs.profile'),
     [ROUTES.KANA_TABLE_ROOT]: t('tabs.kana'),
   }
-  
+
+  const headerTextColors = {
+    [ROUTES.LEARNING_ROOT]: colors.TextPrimary,
+    [ROUTES.PRACTICE_ROOT]: colors.TextContrastSecondary,
+    [ROUTES.SETTINGS_ROOT]: colors.TextPrimary,
+    [ROUTES.KANA_TABLE_ROOT]: colors.TextPrimary,
+  }
+
   return (
-    <View style={[{ backgroundColor: colors.BgPrimary }, ...(isSaveArea ? [{
-      paddingLeft: insets.left + 20,
-      paddingTop: insets.top
+    <View style={[
+      {
+        backgroundColor: "transparent",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+      },
+      ...(isSaveArea ? [{
+        paddingLeft: insets.left + 16,
+        paddingTop: insets.top,
       }] : [])]} >
+
       {children &&
-        <Text style={[styles.title, { color: colors.TextPrimary }, style]}>
+        <Text style={[styles.title, { color: headerTextColors[children as IconType] }, style]}>
           {isKey && titles[children as IconType]}
           {!isKey && children}
         </Text>}
+
+      {icon && icon}
     </View>
   );
 };

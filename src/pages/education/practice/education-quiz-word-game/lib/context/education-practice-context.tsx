@@ -68,6 +68,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
+    setQuestionIndex((prev) => prev + 1);
+    
     if (trueSelected) {
       triggerSuccessNotification();
     } else {
@@ -79,7 +81,6 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     if (currentIndex === questions.length - 1) {
       callback?.(true, trueSelected);
     } else {
-      setQuestionIndex((prev) => prev + 1);
       callback?.(false, trueSelected);
     }
   };

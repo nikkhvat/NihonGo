@@ -60,8 +60,8 @@ const Layout = () => {
     loadLang();
   }, [i18n]);
 
-  if (isAndroid()) {
-    SystemUI.setBackgroundColorAsync(colors.BgPrimary);
+  if (isAndroid) {
+    SystemUI.setBackgroundColorAsync("#1E1E1E");
     NavigationBar.setBackgroundColorAsync(colors.BgPrimary);
   }
 
@@ -77,10 +77,7 @@ const Layout = () => {
 
   return (
     <>
-      <StatusBar
-        barStyle={barStyle}
-        backgroundColor={colors.BgPrimary}
-      />
+      <StatusBar barStyle={barStyle} translucent={true} backgroundColor="transparent" />
 
       <WelcomePage />
       <RootNavigation theme={currentTheme} />

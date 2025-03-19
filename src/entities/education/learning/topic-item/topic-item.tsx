@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -23,8 +23,6 @@ interface TopicItemProps {
   onStartLesson?: () => void;
 }
 
-const screenWidth = Dimensions.get("window").width;
-
 const TopicItem: React.FC<TopicItemProps> = ({
   icon = "?",
   isPassed,
@@ -37,6 +35,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
   onClick,
   onStartLesson,
 }) => {
+  const { width } = useWindowDimensions()
   const { colors } = useThemeContext();
   const { t, i18n } = useTranslation();
 
@@ -81,7 +80,8 @@ const TopicItem: React.FC<TopicItemProps> = ({
             </View>
           )}
         </View>
-        <View style={[styles.info, { width: screenWidth - 130 }]}>
+
+        <View style={[styles.info, { width: width - 130 }]}>
           <Text style={[Typography.boldH4, { color: colors.BgContrast, marginTop: 12, maxWidth: 180 }]}>{title}</Text>
           <Text style={[Typography.regularParagraph, { color: colors.BgContrast }]}>
             {subtitle}
@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     position: "relative",
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 16,
+    paddingRight: 16,
     marginBottom: 8,
     flex: 1,
   },
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   line: {
     width: 4,
     position: "absolute",
-    left: 54,
+    left: 50,
     borderRadius: 4,
     top: 82,
   },

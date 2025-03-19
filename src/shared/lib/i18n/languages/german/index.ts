@@ -73,7 +73,6 @@ const German = {
 
   selectKana: {
     words: "Wörter",                // Zum Beispiel wurden 100 Wörter zum Lernen ausgewählt
-    letters: "Silben",              // Zum Beispiel wurden 5 Silben ausgewählt (か き く け こ)
     nothingSelected: "Nichts ausgewählt" // Wenn nichts ausgewählt ist und dies angezeigt werden muss
   },
 

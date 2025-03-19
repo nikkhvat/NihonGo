@@ -73,7 +73,6 @@ const Chinese = {
 
 	selectKana: {
 		words: "单词",
-		letters: "音节",
 		nothingSelected: "未选择任何内容"
 	},
 

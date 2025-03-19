@@ -72,8 +72,7 @@ const English = {
   },
 
   selectKana: {
-    words: "Words",                 // For example, 100 words selected for learning
-    letters: "Syllables",           // For example, 5 syllables selected (か き く け こ)
+    words: "Words for practice",                 // For example, 100 words selected for learning
     nothingSelected: "Nothing selected" // When nothing is selected and this needs to be indicated
   },
 

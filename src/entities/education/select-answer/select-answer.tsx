@@ -6,6 +6,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { shuffleArray } from "@/shared/helpers/letters";
 import PrimaryButton from "../../../shared/ui/buttons/Primary/primary-button";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 
 type SelectAnswerProps = {
   answers: { title: string; isTrue: boolean }[];
@@ -50,7 +51,7 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({
   return (
     <View style={styles.answers}>
       {shuffleAnswers.map((answer) => (
-        <PrimaryButton
+        <SecondaryButton
           key={answer.title}
           isOutline
           onClick={() => onAnswer(answer)}

@@ -14,13 +14,12 @@ import KanaLetterPage from "@/pages/kana/kana-letter-page/kana-letter-page";
 import KanaTableListPage from "@/pages/kana/kana-table-list-page/kana-table-list-page";
 
 import { createStaticNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { createBottomTabNavigator, TransitionPresets } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabBarButton } from "./BottomTabNavigator";
-import PageTitle from "@/shared/ui/page-title/page-title";
 import { ROUTES } from "./navigationTypes";
-import { isAndroid } from "@/shared/constants/platformUtil";
+import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 export const BottomTabs = createBottomTabNavigator({
   tabBar: (props) => <TabBarButton {...props} />,
@@ -31,11 +30,11 @@ export const BottomTabs = createBottomTabNavigator({
     [ROUTES.SETTINGS_ROOT]: SettingsPage,
   },
   screenOptions: {
-    header: (props) => <PageTitle isSaveArea isKey>{props.route.name}</PageTitle>,
+    headerShown: false,
   },
 });
 
-const RootStack = createNativeStackNavigator({
+const RootStack = createStackNavigator({
   screens: {
     [ROUTES.HOME]: {
       screen: BottomTabs,
@@ -49,8 +48,28 @@ const RootStack = createNativeStackNavigator({
     [ROUTES.LESSON_PAGE]: LessonPage,
     [ROUTES.RESULTS]: EducationResultPage,
 
-    [ROUTES.KANA_INFO]: KanaLetterPage,
-    [ROUTES.KANA_SELECT]: KanaTableChoiceLettersPage,
+    [ROUTES.KANA_INFO]: {
+      screen: KanaLetterPage,
+      options: {
+        presentation: 'modal',
+        headerShadowVisible: false,
+        
+        gestureEnabled: true,
+
+        ...(isIOS && { gestureEnabled: true }),
+        ...(isAndroid && TransitionPresets.ModalPresentationIOS),
+      }
+    },
+
+    [ROUTES.KANA_SELECT]: {
+      screen: KanaTableChoiceLettersPage,
+      options: {
+        presentation: 'modal',
+
+        ...(isIOS && { gestureEnabled: true }),
+        ...(isAndroid && TransitionPresets.ModalPresentationIOS),
+      }
+    },
   },
 });
 
